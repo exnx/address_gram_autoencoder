@@ -1,2 +1,5 @@
 models/
 reconstructed_images/
+/reconstructed_images
+/saved_checkpoints
+/models

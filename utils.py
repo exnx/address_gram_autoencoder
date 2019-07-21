@@ -33,10 +33,16 @@ class ExpoAverageMeter(object):
 
 def save_checkpoint(epoch, model, optimizer, val_loss, is_best):
     ensure_folder(save_folder)
-    state = {'model': model,
-             'optimizer': optimizer}
-    filename = '{0}/checkpoint_{1}_{2:.3f}.tar'.format(save_folder, epoch, val_loss)
-    torch.save(state, filename)
-    # If this checkpoint is the best so far, store a copy so it doesn't get overwritten by a worse checkpoint
-    if is_best:
-        torch.save(state, '{}/BEST_checkpoint.tar'.format(save_folder))
+    #state = {'model': model,
+     #        'optimizer': optimizer}
+        
+
+        
+    file_path = '{0}/checkpoint_{1}_{2:.3f}.tar'.format(save_folder, epoch, val_loss)
+    
+    print('file path', file_path)
+        
+    # print('model module state dict', model.module.state_dict())
+    
+    # need to save with .module since we're using an nn.parallel object to wrap the model
+    torch.save(model.module.state_dict(), file_path)
